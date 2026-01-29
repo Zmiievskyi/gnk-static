@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: minegnk-web
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    networks:
+      - minegnk-network
+
+networks:
+  minegnk-network:
+    driver: bridge
