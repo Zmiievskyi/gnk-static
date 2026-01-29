@@ -292,7 +292,16 @@
    * @param {string} gpuType - GPU type (e.g., 'A100', 'H100')
    */
   function openModal(gpuType) {
-    if (!elements.modal) return;
+    // Guard: no modal element or showModal not supported
+    if (!elements.modal || typeof elements.modal.showModal !== 'function') {
+      console.warn('[HubSpot Modal] Dialog element or showModal() not supported');
+      return;
+    }
+
+    // Guard: modal already open (prevents double-click issues)
+    if (elements.modal.open) {
+      return;
+    }
 
     state.currentGpuType = gpuType;
     const displayName = GPU_DISPLAY_NAMES[gpuType] || gpuType;
@@ -307,8 +316,13 @@
       [HUBSPOT_CONFIG.fieldName]: displayName,
     });
 
-    // Show modal
-    elements.modal.showModal();
+    // Show modal (wrapped in try/catch for edge cases)
+    try {
+      elements.modal.showModal();
+    } catch (error) {
+      console.error('[HubSpot Modal] Failed to open modal:', error);
+      return;
+    }
     showState('loading');
 
     // Load HubSpot script and form
@@ -345,10 +359,29 @@
    * Listens for HubSpot form submission via postMessage
    * HubSpot iframes send messages when forms are submitted
    */
+  /**
+   * Validates that an origin belongs to HubSpot
+   * @param {string} origin - The message origin URL
+   * @returns {boolean} True if origin is a valid HubSpot domain
+   */
+  function isValidHubSpotOrigin(origin) {
+    try {
+      const url = new URL(origin);
+      const hostname = url.hostname;
+      // Exact match or subdomain match (e.g., js-eu1.hsforms.net)
+      return hostname === 'hsforms.net' ||
+             hostname === 'hubspot.com' ||
+             hostname.endsWith('.hsforms.net') ||
+             hostname.endsWith('.hubspot.com');
+    } catch {
+      return false;
+    }
+  }
+
   function setupFormSubmissionListener() {
     window.addEventListener('message', (event) => {
-      // Only process HubSpot messages
-      if (!event.origin.includes('hsforms.net') && !event.origin.includes('hubspot.com')) {
+      // Only process messages from valid HubSpot origins
+      if (!isValidHubSpotOrigin(event.origin)) {
         return;
       }
 

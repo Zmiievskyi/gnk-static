@@ -300,7 +300,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const weight = weightsData.weights[gpuType];
     const price = GPU_CONFIG[gpuType]?.pricePerGpuHour;
 
-    if (!weight || !price) return null;
+    // Use explicit type checks to allow valid 0 values
+    if (typeof weight !== 'number' || typeof price !== 'number' || price === 0) {
+      return null;
+    }
     return weight / price;
   }
 
@@ -338,13 +341,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
     }
 
     // Sort items by efficiency (highest first)
+    // Note: dataset.eff is '' for missing data; Number('') === 0, so check string first
     items.sort((itemA, itemB) => {
-      const effA = Number(itemA.dataset.eff);
-      const effB = Number(itemB.dataset.eff);
-      const hasEffA = Number.isFinite(effA);
-      const hasEffB = Number.isFinite(effB);
+      const rawA = itemA.dataset.eff;
+      const rawB = itemB.dataset.eff;
+      const hasEffA = rawA !== '';
+      const hasEffB = rawB !== '';
 
-      if (hasEffA && hasEffB) return effB - effA;
+      if (hasEffA && hasEffB) return Number(rawB) - Number(rawA);
       if (hasEffB) return 1;
       if (hasEffA) return -1;
       return 0;
@@ -352,8 +356,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
     // Re-append items in sorted order and update visual bars
     const validEfficiencies = items
-      .map(item => Number(item.dataset.eff))
-      .filter(eff => Number.isFinite(eff));
+      .filter(item => item.dataset.eff !== '')
+      .map(item => Number(item.dataset.eff));
     const maxEfficiency = Math.max(...validEfficiencies, 0);
 
     items.forEach((item, index) => {
