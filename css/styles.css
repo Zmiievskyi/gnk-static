@@ -166,32 +166,22 @@ header {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   color: var(--text);
   font-family: var(--font-display);
   font-weight: 700;
+  font-size: 20px;
   letter-spacing: -0.01em;
-  transition: transform 0.2s var(--ease-bounce);
+  transition: opacity 0.2s ease;
 }
 
 .brand:hover {
-  transform: scale(1.02);
+  opacity: 0.85;
   color: var(--text);
 }
 
-.brand-mark {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: radial-gradient(120% 120% at 20% 20%, #FF7A45 0%, var(--brand) 55%, #cc3d00 100%);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, transform 0.2s var(--ease-bounce);
-}
-
-.brand:hover .brand-mark {
-  box-shadow: var(--shadow-glow);
-  transform: rotate(-5deg);
+.brand-highlight {
+  color: var(--brand);
 }
 
 nav ul {
@@ -1006,6 +996,24 @@ footer {
   border-top: 1px solid var(--border);
   background: #0f0f0f;
   color: var(--muted);
+  overflow: hidden;
+}
+
+footer::before {
+  content: "MINEGNK";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(120px, 18vw, 280px);
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.02);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
 }
 
 .footer-inner {
@@ -1013,6 +1021,8 @@ footer {
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 24px;
   padding: 40px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-title {
@@ -1048,6 +1058,8 @@ footer {
   padding: 14px 0;
   font-size: 0.95em;
   color: var(--muted);
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================================================

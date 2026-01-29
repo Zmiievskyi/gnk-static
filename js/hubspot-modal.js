@@ -11,8 +11,8 @@
   // ============================================================================
 
   const HUBSPOT_CONFIG = {
-    portalId: 'YOUR_PORTAL_ID',           // TODO: Replace with actual Portal ID
-    formId: 'YOUR_FORM_ID',               // TODO: Replace with actual Form ID
+    portalId: '147554099',
+    formId: '78fd550b-eec3-4958-bc4d-52c73924b87b',
     region: 'eu1',                         // 'eu1' or 'na1'
     fieldName: 'form_gonka_preffered_configuration', // HubSpot internal field name
     scriptTimeout: 10000,                  // 10 seconds
@@ -85,7 +85,8 @@
    * @returns {string} Script URL
    */
   function getScriptUrl() {
-    return `https://js${HUBSPOT_CONFIG.region === 'na1' ? '' : `-${HUBSPOT_CONFIG.region}`}.hsforms.net/forms/v2.js`;
+    // Use the embed script (iframe method) instead of v2 API
+    return `https://js-${HUBSPOT_CONFIG.region}.hsforms.net/forms/embed/${HUBSPOT_CONFIG.portalId}.js`;
   }
 
   /**
@@ -147,7 +148,8 @@
   function loadHubSpotScript() {
     return new Promise((resolve, reject) => {
       // Check if script already exists
-      if (window.hbspt?.forms) {
+      const existingScript = document.querySelector(`script[src*="hsforms.net"]`);
+      if (existingScript || window.hbspt?.forms) {
         state.scriptLoaded = true;
         resolve();
         return;
@@ -163,7 +165,7 @@
 
       const script = document.createElement('script');
       script.src = getScriptUrl();
-      script.async = true;
+      script.defer = true;
 
       // Timeout handler
       const timeoutId = setTimeout(() => {
@@ -175,7 +177,9 @@
 
       script.onload = () => {
         clearTimeout(timeoutId);
-        waitForHubSpotReady(resolve, reject);
+        state.scriptLoaded = true;
+        state.scriptLoading = false;
+        resolve();
       };
 
       script.onerror = () => {
@@ -224,49 +228,59 @@
   // ============================================================================
 
   /**
-   * Loads the HubSpot form into the container
+   * Loads the HubSpot form into the container using iframe embed method
    */
   function loadForm() {
     if (!elements.formContainer) {
+      console.error('[HubSpot Modal] Form container not found');
       showState('error');
       return;
     }
 
+    console.info('[HubSpot Modal] Creating form with iframe embed method:', {
+      region: HUBSPOT_CONFIG.region,
+      portalId: HUBSPOT_CONFIG.portalId,
+      formId: HUBSPOT_CONFIG.formId,
+    });
+
     // Clear any existing form content
     elements.formContainer.innerHTML = '';
 
-    // Create unique container for this form instance
-    const containerId = generateContainerId();
-    const formDiv = document.createElement('div');
-    formDiv.id = containerId;
-    elements.formContainer.appendChild(formDiv);
+    // Create the hs-form-frame div (iframe embed method)
+    const formFrame = document.createElement('div');
+    formFrame.className = 'hs-form-frame';
+    formFrame.setAttribute('data-region', HUBSPOT_CONFIG.region);
+    formFrame.setAttribute('data-portal-id', HUBSPOT_CONFIG.portalId);
+    formFrame.setAttribute('data-form-id', HUBSPOT_CONFIG.formId);
 
-    try {
-      window.hbspt.forms.create({
-        region: HUBSPOT_CONFIG.region,
-        portalId: HUBSPOT_CONFIG.portalId,
-        formId: HUBSPOT_CONFIG.formId,
-        target: `#${containerId}`,
-        onFormReady: function() {
-          state.formLoaded = true;
-          showState('form');
-          console.info('[HubSpot Modal] Form loaded successfully');
-        },
-        onFormSubmit: function() {
-          console.info('[HubSpot Modal] Form submitted');
-        },
-        onFormSubmitted: function() {
-          console.info('[HubSpot Modal] Form submission confirmed');
-          // Close modal after short delay
-          setTimeout(() => {
-            closeModal();
-          }, 1500);
-        },
-      });
-    } catch (error) {
-      console.error('[HubSpot Modal] Form creation failed:', error);
-      showState('error');
-    }
+    elements.formContainer.appendChild(formFrame);
+
+    // Poll for iframe creation with timeout
+    const maxAttempts = 30; // 30 * 200ms = 6 seconds max
+    let attempts = 0;
+
+    const checkForIframe = () => {
+      attempts++;
+      const iframe = formFrame.querySelector('iframe');
+
+      if (iframe) {
+        state.formLoaded = true;
+        showState('form');
+        console.info('[HubSpot Modal] Form iframe loaded after', attempts * 200, 'ms');
+        return;
+      }
+
+      if (attempts >= maxAttempts) {
+        console.error('[HubSpot Modal] Form iframe failed to load after', maxAttempts * 200, 'ms');
+        showState('error');
+        return;
+      }
+
+      setTimeout(checkForIframe, 200);
+    };
+
+    // Start checking after initial delay for script to initialize
+    setTimeout(checkForIframe, 200);
   }
 
   // ============================================================================
@@ -321,6 +335,52 @@
 
     // Reset to loading state for next open
     showState('loading');
+  }
+
+  // ============================================================================
+  // Form Submission Detection
+  // ============================================================================
+
+  /**
+   * Listens for HubSpot form submission via postMessage
+   * HubSpot iframes send messages when forms are submitted
+   */
+  function setupFormSubmissionListener() {
+    window.addEventListener('message', (event) => {
+      // Only process HubSpot messages
+      if (!event.origin.includes('hsforms.net') && !event.origin.includes('hubspot.com')) {
+        return;
+      }
+
+      // HubSpot sends various message formats
+      let data = event.data;
+
+      // Handle string messages (older format)
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return;
+        }
+      }
+
+      // Check for form submission events
+      const isSubmission = (
+        data.type === 'hsFormCallback' && data.eventName === 'onFormSubmitted'
+      ) || (
+        data.meetingBookSucceeded === true
+      ) || (
+        data.type === 'hsFormCallback' && data.eventName === 'onFormSubmit'
+      );
+
+      if (isSubmission && elements.modal?.open) {
+        console.info('[HubSpot Modal] Form submitted successfully');
+        // Close modal after a short delay to show success state
+        setTimeout(() => {
+          closeModal();
+        }, 1500);
+      }
+    });
   }
 
   // ============================================================================
@@ -412,6 +472,9 @@
 
     // Escape key cleanup
     handleEscapeKey();
+
+    // Listen for form submission via postMessage
+    setupFormSubmissionListener();
 
     console.info('[HubSpot Modal] Initialized');
   }
