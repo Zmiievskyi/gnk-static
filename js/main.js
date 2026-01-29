@@ -97,11 +97,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const monthlyPrice = calculateMonthlyPrice(config.pricePerGpuHour, config.gpusPerServer);
 
     return `
-      <div class="pricing-card" id="pkg-${gpuType.toLowerCase()}">
+      <div class="pricing-card" id="pkg-${gpuType.toLowerCase()}" data-gpu-type="${gpuType}">
         <h3>${config.gpusPerServer}x ${config.name} Server</h3>
         <div class="price">$${formatCurrency(monthlyPrice)}<span class="price-unit">/month</span></div>
         <p class="price-sub"><strong>$${config.pricePerGpuHour.toFixed(2)}</strong> per GPU/hour</p>
         <p>Month-to-month contract</p>
+        <button class="btn btn-rent" data-gpu-type="${gpuType}" aria-label="Rent ${config.gpusPerServer}x ${config.name} Server">
+          Rent Now
+        </button>
       </div>
     `;
   }).join('');
@@ -212,12 +215,17 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
 
   /**
-   * Extracts epoch ID from API response
+   * Extracts epoch index from API response
    * @param {object} apiResponse - Raw API response
-   * @returns {number|null} Epoch ID or null
+   * @returns {number|null} Epoch index or null
    */
   function extractEpochId(apiResponse) {
-    return apiResponse?.active_participants?.epoch_id ?? null;
+    // Try to get epoch_index from the first participant's seed
+    const participants = apiResponse?.active_participants?.participants;
+    if (Array.isArray(participants) && participants.length > 0) {
+      return participants[0]?.seed?.epoch_index ?? null;
+    }
+    return null;
   }
 
   /**
@@ -407,3 +415,38 @@ document.getElementById('year').textContent = new Date().getFullYear();
   refresh();
   setInterval(refresh, API_CONFIG.pollIntervalMs);
 })();
+
+// ============================================================================
+// Scroll Reveal Animation
+// ============================================================================
+
+(function initScrollReveal() {
+  // Add reveal class to sections (except hero which has its own animations)
+  const sections = document.querySelectorAll('section:not(.hero)');
+  sections.forEach(section => {
+    section.classList.add('reveal');
+  });
+
+  // Create Intersection Observer
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -10% 0px',
+    threshold: 0.1
+  };
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Optionally stop observing after reveal
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all reveal elements
+  document.querySelectorAll('.reveal').forEach(el => {
+    revealObserver.observe(el);
+  });
+})();
+

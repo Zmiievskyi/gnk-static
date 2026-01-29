@@ -1,368 +1,825 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MineGNK - Managed GPU Infrastructure for Gonka Participation</title>
-  <meta name="description" content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations. For operators and pools who care about node stability and transparent payment terms." />
-  <meta name="keywords" content="GPU infrastructure, Gonka, validators, managed hosting, A100, H100, H200, B200" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>
+            MineGNK - Managed GPU Infrastructure for Gonka Participation
+        </title>
+        <meta
+            name="description"
+            content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations. For operators and pools who care about node stability and transparent payment terms."
+        />
+        <meta
+            name="keywords"
+            content="GPU infrastructure, Gonka, validators, managed hosting, A100, H100, H200, B200"
+        />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="MineGNK - Managed GPU Infrastructure for Gonka" />
-  <meta property="og:description" content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://minegnk.com" />
+        <!-- Open Graph -->
+        <meta
+            property="og:title"
+            content="MineGNK - Managed GPU Infrastructure for Gonka"
+        />
+        <meta
+            property="og:description"
+            content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://minegnk.com" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF4C00'/></svg>" />
+        <!-- Favicon -->
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF4C00'/></svg>"
+        />
 
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <!-- Grid background pattern -->
-  <div class="grid-bg"></div>
+        <!-- Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
 
-  <header>
-    <div class="container">
-      <div class="header-inner">
-        <a class="brand" href="#top" aria-label="MineGNK home">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span>MineGNK</span>
-        </a>
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="#solutions">What we offer</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#economics">Efficiency</a></li>
-            <li><a href="#how-it-works">How it works</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <!-- Grid background pattern -->
+        <div class="grid-bg"></div>
 
-  <section id="top" class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div>
-          <h1>Run Gonka validators on managed GPU infrastructure — with clear billing and predictable operations.</h1>
-          <p class="hero-sub">
-            For operators and pools who care about node stability, transparent payment terms, and scaling without surprises.
-          </p>
-
-          <div class="cta">
-            <a href="#how-it-works" class="btn btn-primary">Check availability and request quote</a>
-            <a href="#pricing" class="btn btn-secondary">View pricing packages</a>
-          </div>
-        </div>
-
-        <aside class="panel" aria-label="What you get">
-          <div class="panel-kicker">What you get at go-live</div>
-          <p class="note">Statuses are visible in one place, risks are highlighted in advance, and payment/renewal terms and responsibilities are fixed upfront.</p>
-
-          <div class="hr"></div>
-
-          <div class="card">
-            <h3>Three pains we remove</h3>
-            <ul class="list">
-              <li><strong>Silence in critical moments:</strong> alerts and clear incident updates.</li>
-              <li><strong>Opaque money:</strong> clear billing and transaction history.</li>
-              <li><strong>"Buying blind" risk:</strong> SLA and process clarity.</li>
-            </ul>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section id="solutions" class="solutions">
-    <div class="container">
-      <h2>What we offer</h2>
-
-      <div class="card">
-        <ul class="list">
-          <li><strong>Understand the economics fast:</strong> clear packages and pricing to pick a starting point quickly.</li>
-          <li><strong>Reduce risk before paying:</strong> confirm the quote and configuration before payment, with clear responsibilities defined in the contract.</li>
-          <li><strong>Launch without surprises:</strong> a predictable path from request → KYC → contract → payment → go-live.</li>
-          <li><strong>Operate with clarity:</strong> visible statuses and clear incident updates when something changes.</li>
-          <li><strong>GPU Services SLA:</strong> 95% availability for the GPU infrastructure.*</li>
-          <li><strong>Scale when needed:</strong> add capacity under the same process and billing rules (subject to capacity).</li>
-        </ul>
-      </div>
-      <div class="footnote">* This SLA applies to infrastructure availability only: network-level downtime, missed rewards, or any "mining/participation" outcomes are not covered.</div>
-
-      <div class="grid-2 mt-md">
-        <div class="card">
-          <h3>For Large-Scale Operators</h3>
-          <ul class="list">
-            <li><strong>Procurement-ready flow:</strong> KYC, contract, and invoicing that fits internal approvals.</li>
-            <li><strong>Lower launch risk:</strong> reliability terms and clear responsibility boundaries.</li>
-            <li><strong>Maintain finance control:</strong> transparent billing mechanics, renewal timing, and invoicing rules.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>For Pools and Resellers</h3>
-          <ul class="list">
-            <li><strong>Faster incident response:</strong> clear next steps and operational updates during issues.</li>
-            <li><strong>Reduce operational blind spots:</strong> monitoring approach focused on preventing missed events.</li>
-            <li><strong>Fleet consistency:</strong> repeatable process for adding capacity and operating across multiple deployments.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="addon-band" aria-label="Managed service add-on">
-        <div class="addon-title">
-          <h3>Managed service add-on</h3>
-          <div class="addon-kicker">Additional service</div>
-        </div>
-        <div class="card">
-          <ul class="list">
-            <li><strong>No manual bring-up:</strong> we handle OS + RAID, drivers, and initial tuning.</li>
-            <li><strong>No "setup guesswork":</strong> we deploy your stack as instructed.</li>
-            <li><strong>No blind spots:</strong> we monitor infrastructure signals 24/7 (node connectivity, GPU utilization &amp; temperature).</li>
-            <li><strong>Clear support channel:</strong> business hours support (CET) with updates and next steps.</li>
-            <li><strong>Downtime credits:</strong> available under the managed service add-on (infrastructure downtime only).</li>
-          </ul>
-          <div class="footnote">Note: monitoring/health scope should match the actually available tooling.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing">
-    <div class="container">
-      <h2>Pricing</h2>
-      <h3>GPU Package Selector</h3>
-      <div class="pricing-grid" id="pricing-cards">
-        <!-- Generated dynamically from GPU_CONFIG in main.js -->
-        <noscript>
-          <p class="note">Enable JavaScript to view pricing information, or contact us directly for a quote.</p>
-        </noscript>
-      </div>
-      <p><strong>Discounts:</strong> Volume discounts available from 10+ servers.</p>
-    </div>
-  </section>
-
-  <section id="economics">
-    <div class="container">
-      <h2>Efficiency</h2>
-      <div class="card">
-        <h3>Efficiency by GPU (Weight*hr/$)</h3>
-        <p class="note">Calculated as (weight per GPU) ÷ ($/GPU/hr at our price).</p>
-        <div class="note mb-sm">
-          Epoch: <span class="mono" id="eff-epoch">—</span> •
-          Updated: <span class="mono" id="eff-updated">—</span> UTC
-          <span id="eff-status" class="eff-status"></span>
-        </div>
-
-        <ul class="eff-list" id="eff-list" aria-label="Efficiency values">
-          <!-- Generated dynamically from GPU_CONFIG in main.js -->
-          <noscript>
-            <li class="note">Enable JavaScript to view efficiency data.</li>
-          </noscript>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="how-it-works">
-    <div class="container">
-      <h2>How It Works</h2>
-      <div class="timeline" aria-label="Process steps">
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>1</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 4h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 6H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Submit request</h3>
+        <header>
+            <div class="container">
+                <div class="header-inner">
+                    <a class="brand" href="#top" aria-label="MineGNK home">
+                        <span class="brand-mark" aria-hidden="true"></span>
+                        <span>MineGNK</span>
+                    </a>
+                    <nav aria-label="Primary">
+                        <ul>
+                            <li><a href="#solutions">What we offer</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#economics">Efficiency</a></li>
+                            <li><a href="#how-it-works">How it works</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <p>Submit your bundle preferences (GPU model, region, duration).</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>2</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M8 10h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 14h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M15 14l1.2 1.2L19 12.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Complete KYC</h3>
-            </div>
-            <p>Pass KYC verification. We provide a clear checklist of required documentation.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>3</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 3h8l2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M15 3v2h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Review quote</h3>
-            </div>
-            <p>Confirm the quote and configuration before committing.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>4</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 20h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M14.5 3.5l6 6L10 20H4v-6L14.5 3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Sign contract and pay</h3>
-            </div>
-            <p>Sign a 1-month contract and pay for the first month. Payment precedes server assignment.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>5</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 4h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M6 13h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M8 8h.01M8 17h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Provisioning</h3>
-            </div>
-            <p>We assign servers and launch you into production.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>6</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M6 16l3-3 2 2 5-6 2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Operate and monitor</h3>
-            </div>
-            <p>We monitor infrastructure and respond to issues.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="marker" aria-hidden="true"><span>7</span></div>
-          <div class="card">
-            <div class="step-title">
-              <span class="step-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 3h10a2 2 0 0 1 2 2v16H5V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <h3 class="mt-0 mb-0">Billing and renewal</h3>
-            </div>
-            <ul class="list">
-              <li>Renewal: pay no later than 10 days before contract end</li>
-              <li>Invoicing: monthly invoices are issued at calendar month end</li>
-              <li>Adjustments: handled according to the contract terms</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        </header>
 
-  <section id="faq">
-    <div class="container">
-      <h2>FAQ</h2>
-      <details class="faq-item">
-        <summary>How quickly can I start participating?</summary>
-        <div class="faq-answer">Provisioning typically completes within days after KYC verification and contract signing.</div>
-      </details>
-      <details class="faq-item">
-        <summary>Can I confirm infrastructure fit before committing budget?</summary>
-        <div class="faq-answer">Yes. You can confirm the quote and configuration details before you sign and pay.</div>
-      </details>
-      <details class="faq-item">
-        <summary>What happens if servers are down?</summary>
-        <div class="faq-answer">
-          GPU Services SLA: 95% availability for the GPU infrastructure (Bare Metal Instances, per <a href="https://gcore.com/legal#cloud" target="_blank" rel="noopener noreferrer">Gcore Cloud SLA</a>). This SLA applies to infrastructure availability only: network-level downtime, missed rewards, or any "mining/participation" outcomes are not covered.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>How does billing work?</summary>
-        <div class="faq-answer">
-          <ul>
-            <li>Month-to-month contracts</li>
-            <li>Payment for the first month is required before server assignment</li>
-            <li>Renewal: pay no later than 10 days before contract end</li>
-            <li>Monthly invoices are issued at calendar month end</li>
-          </ul>
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>Can I scale up or down?</summary>
-        <div class="faq-answer">Upgrade is available anytime (subject to capacity). Downgrade is available once per month.</div>
-      </details>
-      <details class="faq-item">
-        <summary>Do you offer discounts?</summary>
-        <div class="faq-answer">Volume discounts can be discussed when ordering multiple servers.</div>
-      </details>
-      <details class="faq-item">
-        <summary>What support is available?</summary>
-        <div class="faq-answer">Business hours support for infrastructure issues, with clear next steps and update cadence.</div>
-      </details>
-    </div>
-  </section>
+        <section id="top" class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <h1>
+                            Run Gonka validators on managed GPU infrastructure -
+                            with clear billing and predictable operations.
+                        </h1>
+                        <p class="hero-sub">
+                            For operators and pools who care about node
+                            stability, transparent payment terms, and scaling
+                            without surprises.
+                        </p>
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div>
-          <div class="footer-title">MineGNK</div>
-          <p>Managed GPU infrastructure for Gonka participation.</p>
-        </div>
-        <div>
-          <div class="footer-title">Navigate</div>
-          <ul class="footer-links">
-            <li><a href="#solutions">What we offer</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#economics">Efficiency</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-title">Procurement</div>
-          <ul class="footer-links">
-            <li><a href="#how-it-works">KYC and contract-first flow</a></li>
-            <li><a href="#how-it-works">Quote confirmation before payment</a></li>
-            <li><a href="#how-it-works">Billing, invoicing, renewals</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-meta">© <span id="year"></span> MineGNK. All rights reserved.</div>
-    </div>
-  </footer>
+                        <div class="cta">
+                            <a href="#how-it-works" class="btn btn-primary"
+                                >Check availability and request quote</a
+                            >
+                            <a href="#pricing" class="btn btn-secondary"
+                                >View pricing packages</a
+                            >
+                        </div>
+                    </div>
 
-  <script src="js/main.js"></script>
-</body>
+                    <aside class="panel" aria-label="What you get">
+                        <div class="panel-kicker">What you get at go-live</div>
+                        <p class="note">
+                            Statuses are visible in one place, risks are
+                            highlighted in advance, and payment/renewal terms
+                            and responsibilities are fixed upfront.
+                        </p>
+
+                        <div class="hr"></div>
+
+                        <div class="card">
+                            <h3>Three pains we remove</h3>
+                            <ul class="list">
+                                <li>
+                                    <strong
+                                        >Silence in critical moments:</strong
+                                    >
+                                    alerts and clear incident updates.
+                                </li>
+                                <li>
+                                    <strong>Opaque money:</strong> clear billing
+                                    and transaction history.
+                                </li>
+                                <li>
+                                    <strong>"Buying blind" risk:</strong> SLA
+                                    and process clarity.
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="solutions">
+            <div class="container">
+                <h2>What we offer</h2>
+
+                <div class="card">
+                    <ul class="list">
+                        <li>
+                            <strong>Understand the economics fast:</strong>
+                            clear packages and pricing to pick a starting point
+                            quickly.
+                        </li>
+                        <li>
+                            <strong>Reduce risk before paying:</strong> confirm
+                            the quote and configuration before payment, with
+                            clear responsibilities defined in the contract.
+                        </li>
+                        <li>
+                            <strong>Launch without surprises:</strong> a
+                            predictable path from request → KYC → contract →
+                            payment → go-live.
+                        </li>
+                        <li>
+                            <strong>Operate with clarity:</strong> visible
+                            statuses and clear incident updates when something
+                            changes.
+                        </li>
+                        <li>
+                            <strong>GPU Services SLA:</strong> 95% availability
+                            for the GPU infrastructure.*
+                        </li>
+                        <li>
+                            <strong>Scale when needed:</strong> add capacity
+                            under the same process and billing rules (subject to
+                            capacity).
+                        </li>
+                    </ul>
+                </div>
+                <div class="footnote">
+                    * This SLA applies to infrastructure availability only:
+                    network-level downtime, missed rewards, or any
+                    "mining/participation" outcomes are not covered.
+                </div>
+
+                <div class="grid-2 mt-md">
+                    <div class="card">
+                        <h3>For Large-Scale Operators</h3>
+                        <ul class="list">
+                            <li>
+                                <strong>Procurement-ready flow:</strong> KYC,
+                                contract, and invoicing that fits internal
+                                approvals.
+                            </li>
+                            <li>
+                                <strong>Lower launch risk:</strong> reliability
+                                terms and clear responsibility boundaries.
+                            </li>
+                            <li>
+                                <strong>Maintain finance control:</strong>
+                                transparent billing mechanics, renewal timing,
+                                and invoicing rules.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>For Pools and Resellers</h3>
+                        <ul class="list">
+                            <li>
+                                <strong>Faster incident response:</strong> clear
+                                next steps and operational updates during
+                                issues.
+                            </li>
+                            <li>
+                                <strong>Reduce operational blind spots:</strong>
+                                monitoring approach focused on preventing missed
+                                events.
+                            </li>
+                            <li>
+                                <strong>Fleet consistency:</strong> repeatable
+                                process for adding capacity and operating across
+                                multiple deployments.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="addon-band" aria-label="Managed service add-on">
+                    <div class="addon-title">
+                        <h3>Managed service add-on</h3>
+                        <div class="addon-kicker">Additional service</div>
+                    </div>
+                    <div class="card">
+                        <ul class="list">
+                            <li>
+                                <strong>No manual bring-up:</strong> we handle
+                                OS + RAID, drivers, and initial tuning.
+                            </li>
+                            <li>
+                                <strong>No "setup guesswork":</strong> we deploy
+                                your stack as instructed.
+                            </li>
+                            <li>
+                                <strong>No blind spots:</strong> we monitor
+                                infrastructure signals 24/7 (node connectivity,
+                                GPU utilization &amp; temperature).
+                            </li>
+                            <li>
+                                <strong>Clear support channel:</strong> business
+                                hours support (CET) with updates and next steps.
+                            </li>
+                            <li>
+                                <strong>Downtime credits:</strong> available
+                                under the managed service add-on (infrastructure
+                                downtime only).
+                            </li>
+                        </ul>
+                        <div class="footnote">
+                            Note: monitoring/health scope should match the
+                            actually available tooling.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <h2>Pricing</h2>
+                <h3>GPU Package Selector</h3>
+                <div class="pricing-grid" id="pricing-cards">
+                    <!-- Generated dynamically from GPU_CONFIG in main.js -->
+                    <noscript>
+                        <p class="note">
+                            Enable JavaScript to view pricing information, or
+                            contact us directly for a quote.
+                        </p>
+                    </noscript>
+                </div>
+                <p>
+                    <strong>Discounts:</strong> Volume discounts available from
+                    10+ servers.
+                </p>
+            </div>
+        </section>
+
+        <section id="economics">
+            <div class="container">
+                <h2>Efficiency</h2>
+                <div class="card">
+                    <h3>Efficiency by GPU</h3>
+                    <div class="formula-box">
+                        <div class="formula-content">
+                            <span class="formula-eq">Efficiency</span>
+                            <span class="formula-equals">=</span>
+                            <span class="formula-frac">
+                                <span class="formula-num">weight per GPU</span>
+                                <span class="formula-den">$ / GPU / hr</span>
+                            </span>
+                        </div>
+                        <p class="formula-hint">Higher efficiency = more weight per dollar spent</p>
+                    </div>
+                    <div class="eff-meta">
+                        <span class="eff-meta-item">
+                            <span class="eff-meta-label">Epoch</span>
+                            <span class="mono" id="eff-epoch">—</span>
+                        </span>
+                        <span class="eff-meta-divider">•</span>
+                        <span class="eff-meta-item">
+                            <span class="eff-meta-label">Updated</span>
+                            <span class="mono" id="eff-updated">—</span>
+                            <span class="eff-meta-tz">UTC</span>
+                        </span>
+                        <span id="eff-status" class="eff-status"></span>
+                    </div>
+
+                    <ul
+                        class="eff-list"
+                        id="eff-list"
+                        aria-label="Efficiency values"
+                    >
+                        <!-- Generated dynamically from GPU_CONFIG in main.js -->
+                        <noscript>
+                            <li class="note">
+                                Enable JavaScript to view efficiency data.
+                            </li>
+                        </noscript>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="timeline" aria-label="Process steps">
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>1</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M9 4h6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M8 6H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M8 11h8M8 15h6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Submit request</h3>
+                            </div>
+                            <p>
+                                Submit your bundle preferences (GPU model,
+                                region, duration).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>2</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M8 10h5"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M8 14h4"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M15 14l1.2 1.2L19 12.4"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Complete KYC</h3>
+                            </div>
+                            <p>
+                                Pass KYC verification. We provide a clear
+                                checklist of required documentation.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>3</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M7 3h8l2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M15 3v2h2"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M8 11h8M8 15h6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Review quote</h3>
+                            </div>
+                            <p>
+                                Confirm the quote and configuration before
+                                committing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>4</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M4 20h6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M14.5 3.5l6 6L10 20H4v-6L14.5 3.5Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Sign contract and pay</h3>
+                            </div>
+                            <p>
+                                Sign a 1-month contract and pay for the first
+                                month. Payment precedes server assignment.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>5</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M6 4h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M6 13h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M8 8h.01M8 17h.01"
+                                            stroke="currentColor"
+                                            stroke-width="3"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Provisioning</h3>
+                            </div>
+                            <p>
+                                We assign servers and launch you into
+                                production.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>6</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="M6 16l3-3 2 2 5-6 2 2"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M4 18h16"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Operate and monitor</h3>
+                            </div>
+                            <p>
+                                We monitor infrastructure and respond to issues.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="marker" aria-hidden="true">
+                            <span>7</span>
+                        </div>
+                        <div class="card">
+                            <div class="step-title">
+                                <span class="step-ico" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M7 3h10a2 2 0 0 1 2 2v16H5V5a2 2 0 0 1 2-2Z"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M8 8h8M8 12h8M8 16h6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <h3 class="mt-0 mb-0">Billing and renewal</h3>
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    Renewal: pay no later than 10 days before
+                                    contract end
+                                </li>
+                                <li>
+                                    Invoicing: monthly invoices are issued at
+                                    calendar month end
+                                </li>
+                                <li>
+                                    Adjustments: handled according to the
+                                    contract terms
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <div class="container">
+                <h2>FAQ</h2>
+                <details class="faq-item">
+                    <summary>How quickly can I start participating?</summary>
+                    <div class="faq-answer">
+                        Provisioning typically completes within days after KYC
+                        verification and contract signing.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>
+                        Can I confirm infrastructure fit before committing
+                        budget?
+                    </summary>
+                    <div class="faq-answer">
+                        Yes. You can confirm the quote and configuration details
+                        before you sign and pay.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What happens if servers are down?</summary>
+                    <div class="faq-answer">
+                        GPU Services SLA: 95% availability for the GPU
+                        infrastructure (Bare Metal Instances, per
+                        <a
+                            href="https://gcore.com/legal#cloud"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >Gcore Cloud SLA</a
+                        >). This SLA applies to infrastructure availability
+                        only: network-level downtime, missed rewards, or any
+                        "mining/participation" outcomes are not covered.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How does billing work?</summary>
+                    <div class="faq-answer">
+                        <ul>
+                            <li>Month-to-month contracts</li>
+                            <li>
+                                Payment for the first month is required before
+                                server assignment
+                            </li>
+                            <li>
+                                Renewal: pay no later than 10 days before
+                                contract end
+                            </li>
+                            <li>
+                                Monthly invoices are issued at calendar month
+                                end
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I scale up or down?</summary>
+                    <div class="faq-answer">
+                        Upgrade is available anytime (subject to capacity).
+                        Downgrade is available once per month.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Do you offer discounts?</summary>
+                    <div class="faq-answer">
+                        Volume discounts can be discussed when ordering multiple
+                        servers.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What support is available?</summary>
+                    <div class="faq-answer">
+                        Business hours support for infrastructure issues, with
+                        clear next steps and update cadence.
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-inner">
+                    <div>
+                        <div class="footer-title">MineGNK</div>
+                        <p>
+                            Managed GPU infrastructure for Gonka participation.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="footer-title">Navigate</div>
+                        <ul class="footer-links">
+                            <li><a href="#solutions">What we offer</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#economics">Efficiency</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="footer-title">Procurement</div>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="#how-it-works"
+                                    >KYC and contract-first flow</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#how-it-works"
+                                    >Quote confirmation before payment</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#how-it-works"
+                                    >Billing, invoicing, renewals</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-meta">
+                    © <span id="year"></span> MineGNK. All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+        <!-- HubSpot Form Modal -->
+        <dialog
+            id="hubspot-modal"
+            class="hubspot-modal"
+            aria-labelledby="modal-title"
+            aria-modal="true"
+        >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h2 id="modal-title" class="modal-title">
+                            Request GPU Server
+                        </h2>
+                        <p class="modal-subtitle" id="modal-subtitle"></p>
+                    </div>
+                    <button
+                        type="button"
+                        class="modal-close"
+                        aria-label="Close dialog"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M6 18L18 6M6 6l12 12"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div
+                        id="hubspot-form-container"
+                        class="hubspot-form-container"
+                    ></div>
+
+                    <div id="hubspot-loading" class="hubspot-loading">
+                        <div class="eff-spinner"></div>
+                        <p>Loading form...</p>
+                    </div>
+
+                    <div
+                        id="hubspot-error"
+                        class="hubspot-error"
+                        style="display: none"
+                    >
+                        <svg
+                            class="error-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            />
+                            <path
+                                d="M12 8v4M12 16h.01"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        <p>Unable to load the request form.</p>
+                        <p class="note">
+                            Please contact us directly:
+                            <a href="mailto:contact@minegnk.com"
+                                >contact@minegnk.com</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <script src="js/main.js"></script>
+        <script src="js/hubspot-modal.js"></script>
+    </body>
 </html>
