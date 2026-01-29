@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Managed GPU Infrastructure for Gonka Participation</title>
+  <title>MineGNK - Managed GPU Infrastructure for Gonka Participation</title>
+  <meta name="description" content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations. For operators and pools who care about node stability and transparent payment terms." />
+  <meta name="keywords" content="GPU infrastructure, Gonka, validators, managed hosting, A100, H100, H200, B200" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MineGNK - Managed GPU Infrastructure for Gonka" />
+  <meta property="og:description" content="Run Gonka validators on managed GPU infrastructure with clear billing and predictable operations." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://minegnk.com" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF4C00'/></svg>" />
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -30,8 +42,7 @@
     </div>
   </header>
 
-  <a id="top"></a>
-  <section class="hero">
+  <section id="top" class="hero">
     <div class="container">
       <div class="hero-grid">
         <div>
@@ -81,7 +92,7 @@
       </div>
       <div class="footnote">* This SLA applies to infrastructure availability only: network-level downtime, missed rewards, or any "mining/participation" outcomes are not covered.</div>
 
-      <div class="grid-2" style="margin-top:18px">
+      <div class="grid-2 mt-md">
         <div class="card">
           <h3>For Large-Scale Operators</h3>
           <ul class="list">
@@ -124,31 +135,11 @@
     <div class="container">
       <h2>Pricing</h2>
       <h3>GPU Package Selector</h3>
-      <div class="pricing-grid">
-        <div class="pricing-card" id="pkg-a100">
-          <h3>8x A100 Server</h3>
-          <div class="price">$5,782<span class="price-unit">/month</span></div>
-          <p class="price-sub"><strong>$0.99</strong> per GPU/hour</p>
-          <p>Month-to-month contract</p>
-        </div>
-        <div class="pricing-card" id="pkg-h100">
-          <h3>8x H100 Server</h3>
-          <div class="price">$10,512<span class="price-unit">/month</span></div>
-          <p class="price-sub"><strong>$1.80</strong> per GPU/hour</p>
-          <p>Month-to-month contract</p>
-        </div>
-        <div class="pricing-card" id="pkg-h200">
-          <h3>8x H200 Server</h3>
-          <div class="price">$14,016<span class="price-unit">/month</span></div>
-          <p class="price-sub"><strong>$2.40</strong> per GPU/hour</p>
-          <p>Month-to-month contract</p>
-        </div>
-        <div class="pricing-card" id="pkg-b200">
-          <h3>8x B200 Server</h3>
-          <div class="price">$17,640<span class="price-unit">/month</span></div>
-          <p class="price-sub"><strong>$3.50</strong> per GPU/hour</p>
-          <p>Month-to-month contract</p>
-        </div>
+      <div class="pricing-grid" id="pricing-cards">
+        <!-- Generated dynamically from GPU_CONFIG in main.js -->
+        <noscript>
+          <p class="note">Enable JavaScript to view pricing information, or contact us directly for a quote.</p>
+        </noscript>
       </div>
       <p><strong>Discounts:</strong> Volume discounts available from 10+ servers.</p>
     </div>
@@ -160,44 +151,17 @@
       <div class="card">
         <h3>Efficiency by GPU (Weight*hr/$)</h3>
         <p class="note">Calculated as (weight per GPU) ÷ ($/GPU/hr at our price).</p>
-        <div class="note" style="margin-bottom:12px">
-          Epoch: <span class="mono" id="eff-epoch">—</span> <span class="note">•</span>
-          Updated: <span class="mono" id="eff-updated">—</span> <span class="note">UTC</span>
+        <div class="note mb-sm">
+          Epoch: <span class="mono" id="eff-epoch">—</span> •
+          Updated: <span class="mono" id="eff-updated">—</span> UTC
+          <span id="eff-status" class="eff-status"></span>
         </div>
 
-        <ul class="eff-list" aria-label="Efficiency values">
-          <li class="eff-item" data-gpu="A100">
-            <div class="eff-left">
-              <span class="eff-gpu">A100</span>
-              <span class="eff-badge">Best value</span>
-            </div>
-            <span class="eff-val" id="eff-a100">—</span>
-            <div class="eff-bar-wrap" aria-hidden="true"><div class="eff-bar"></div></div>
-          </li>
-          <li class="eff-item" data-gpu="H100">
-            <div class="eff-left">
-              <span class="eff-gpu">H100</span>
-              <span class="eff-badge">Best value</span>
-            </div>
-            <span class="eff-val" id="eff-h100">—</span>
-            <div class="eff-bar-wrap" aria-hidden="true"><div class="eff-bar"></div></div>
-          </li>
-          <li class="eff-item" data-gpu="H200">
-            <div class="eff-left">
-              <span class="eff-gpu">H200</span>
-              <span class="eff-badge">Best value</span>
-            </div>
-            <span class="eff-val" id="eff-h200">—</span>
-            <div class="eff-bar-wrap" aria-hidden="true"><div class="eff-bar"></div></div>
-          </li>
-          <li class="eff-item" data-gpu="B200">
-            <div class="eff-left">
-              <span class="eff-gpu">B200</span>
-              <span class="eff-badge">Best value</span>
-            </div>
-            <span class="eff-val" id="eff-b200">—</span>
-            <div class="eff-bar-wrap" aria-hidden="true"><div class="eff-bar"></div></div>
-          </li>
+        <ul class="eff-list" id="eff-list" aria-label="Efficiency values">
+          <!-- Generated dynamically from GPU_CONFIG in main.js -->
+          <noscript>
+            <li class="note">Enable JavaScript to view efficiency data.</li>
+          </noscript>
         </ul>
       </div>
     </div>
@@ -218,7 +182,7 @@
                   <path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Submit request</h3>
+              <h3 class="mt-0 mb-0">Submit request</h3>
             </div>
             <p>Submit your bundle preferences (GPU model, region, duration).</p>
           </div>
@@ -235,7 +199,7 @@
                   <path d="M15 14l1.2 1.2L19 12.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Complete KYC</h3>
+              <h3 class="mt-0 mb-0">Complete KYC</h3>
             </div>
             <p>Pass KYC verification. We provide a clear checklist of required documentation.</p>
           </div>
@@ -251,7 +215,7 @@
                   <path d="M8 11h8M8 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Review quote</h3>
+              <h3 class="mt-0 mb-0">Review quote</h3>
             </div>
             <p>Confirm the quote and configuration before committing.</p>
           </div>
@@ -266,7 +230,7 @@
                   <path d="M14.5 3.5l6 6L10 20H4v-6L14.5 3.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Sign contract and pay</h3>
+              <h3 class="mt-0 mb-0">Sign contract and pay</h3>
             </div>
             <p>Sign a 1-month contract and pay for the first month. Payment precedes server assignment.</p>
           </div>
@@ -282,7 +246,7 @@
                   <path d="M8 8h.01M8 17h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Provisioning</h3>
+              <h3 class="mt-0 mb-0">Provisioning</h3>
             </div>
             <p>We assign servers and launch you into production.</p>
           </div>
@@ -298,7 +262,7 @@
                   <path d="M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Operate and monitor</h3>
+              <h3 class="mt-0 mb-0">Operate and monitor</h3>
             </div>
             <p>We monitor infrastructure and respond to issues.</p>
           </div>
@@ -313,7 +277,7 @@
                   <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </span>
-              <h3 style="margin:0">Billing and renewal</h3>
+              <h3 class="mt-0 mb-0">Billing and renewal</h3>
             </div>
             <ul class="list">
               <li>Renewal: pay no later than 10 days before contract end</li>

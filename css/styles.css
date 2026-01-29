@@ -485,3 +485,36 @@ footer {
 .mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
+
+/* Utility classes */
+.mt-0 { margin-top: 0 }
+.mt-sm { margin-top: 12px }
+.mt-md { margin-top: 18px }
+.mb-0 { margin-bottom: 0 }
+.mb-sm { margin-bottom: 12px }
+
+/* Efficiency status indicator */
+.eff-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875em;
+  min-height: 20px;
+}
+.eff-status--loading { color: var(--muted) }
+.eff-status--success { color: var(--ok) }
+.eff-status--error { color: var(--warn) }
+
+/* Loading spinner */
+.eff-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg) }
+}

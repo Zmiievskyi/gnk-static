@@ -22,13 +22,20 @@ The site uses a dark theme with brand colors derived from an Angular project:
 - Consistent spacing using CSS custom properties
 
 ### Key Features
-1. **Efficiency Calculator** (`js/main.js`):
+1. **GPU Configuration** (`js/main.js`):
+   - Single `GPU_CONFIG` object defines all GPU types, prices, and fallback weights
+   - Pricing cards are generated dynamically from this configuration
+   - No duplication between HTML and JavaScript
+
+2. **Efficiency Calculator** (`js/main.js`):
    - Fetches real-time GPU weight data from Gonka API endpoint
    - Calculates efficiency metric: `(weight per GPU) / ($/GPU/hr)`
    - Supports optional `?weightsUrl=` query parameter to override weight source
    - Polls every 30 seconds for updates
+   - Shows loading spinner and error states for better UX
    - Dynamically ranks GPUs and highlights "Best value"
-   - Falls back to hardcoded weights if API fails
+   - Falls back to configured weights if API fails
+   - Logs warnings to console for debugging
 
 2. **Responsive Design**:
    - Mobile-first with breakpoints at 520px, 768px, 980px
@@ -99,13 +106,16 @@ Expected JSON format for custom weights:
 
 ## Important Constants
 
-### Pricing (in `index.html` and must match `js/main.js`)
-- A100: $0.99/GPU/hr → $5,782/month
-- H100: $1.80/GPU/hr → $10,512/month
-- H200: $2.40/GPU/hr → $14,016/month
-- B200: $3.50/GPU/hr → $17,640/month
+### GPU Configuration (Single Source of Truth)
+All GPU pricing and configuration is defined in `GPU_CONFIG` object in `js/main.js`:
+- A100: $0.99/GPU/hr (8 GPUs per server)
+- H100: $1.80/GPU/hr (8 GPUs per server)
+- H200: $2.40/GPU/hr (8 GPUs per server)
+- B200: $3.50/GPU/hr (8 GPUs per server)
 
-When updating prices, change both the HTML pricing cards AND the `PRICE_PER_GPU_HR` object in `js/main.js`.
+Monthly prices are calculated automatically: `pricePerGpuHour × gpusPerServer × 730 hours`
+
+**To update pricing:** Only modify the `GPU_CONFIG` object in `js/main.js`. The pricing cards are generated dynamically from this configuration.
 
 ### API Endpoint
 - Current: `https://node4.gonka.ai/v1/epochs/current/participants`

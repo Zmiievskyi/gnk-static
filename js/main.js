@@ -1,145 +1,409 @@
-// Year in footer
+/**
+ * MineGNK - Main JavaScript
+ * Handles footer year, pricing cards, and efficiency calculator
+ */
+
+// ============================================================================
+// Configuration - Single source of truth for GPU data
+// ============================================================================
+
+const GPU_CONFIG = {
+  A100: {
+    name: 'A100',
+    pricePerGpuHour: 0.99,
+    gpusPerServer: 8,
+    fallbackWeight: 256.498,
+  },
+  H100: {
+    name: 'H100',
+    pricePerGpuHour: 1.80,
+    gpusPerServer: 8,
+    fallbackWeight: 606.046,
+  },
+  H200: {
+    name: 'H200',
+    pricePerGpuHour: 2.40,
+    gpusPerServer: 8,
+    fallbackWeight: 619.000,
+  },
+  B200: {
+    name: 'B200',
+    pricePerGpuHour: 3.50,
+    gpusPerServer: 8,
+    fallbackWeight: 955.921,
+  },
+};
+
+const API_CONFIG = {
+  epochParticipantsUrl: 'https://node4.gonka.ai/v1/epochs/current/participants',
+  pollIntervalMs: 30000,
+  timeoutMs: 8000,
+};
+
+// ============================================================================
+// Utilities
+// ============================================================================
+
+/**
+ * Calculates monthly price from hourly GPU rate
+ * @param {number} pricePerGpuHour - Price per GPU per hour
+ * @param {number} gpusPerServer - Number of GPUs per server
+ * @returns {number} Monthly price (assuming 730 hours/month)
+ */
+function calculateMonthlyPrice(pricePerGpuHour, gpusPerServer) {
+  const hoursPerMonth = 730;
+  return pricePerGpuHour * gpusPerServer * hoursPerMonth;
+}
+
+/**
+ * Formats a number as currency
+ * @param {number} value - The value to format
+ * @returns {string} Formatted currency string
+ */
+function formatCurrency(value) {
+  return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+/**
+ * Formats a Date as UTC time string (HH:MM:SS)
+ * @param {Date} date - The date to format
+ * @returns {string} Formatted time string
+ */
+function formatTimeUTC(date) {
+  const hours = String(date.getUTCHours()).padStart(2, '0');
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+// ============================================================================
+// Footer Year
+// ============================================================================
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Efficiency calculator
-(function () {
-  const EPOCH_PARTICIPANTS_URL = 'https://node4.gonka.ai/v1/epochs/current/participants';
-  const POLL_MS = 30000;
+// ============================================================================
+// Pricing Cards Generator
+// ============================================================================
 
-  const elEffEpoch = document.getElementById('eff-epoch');
-  const elEffUpdated = document.getElementById('eff-updated');
-  const elEffA100 = document.getElementById('eff-a100');
-  const elEffH100 = document.getElementById('eff-h100');
-  const elEffH200 = document.getElementById('eff-h200');
-  const elEffB200 = document.getElementById('eff-b200');
+(function initPricingCards() {
+  const container = document.getElementById('pricing-cards');
+  if (!container) return;
 
-  const PRICE_PER_GPU_HR = { A100: 0.99, H100: 1.80, H200: 2.40, B200: 3.50 };
-  const WEIGHT_PER_GPU_FALLBACK = { A100: 256.498, H100: 606.046, H200: 619.000, B200: 955.921 };
-  let weightsPayload = { epoch: null, weights: { ...WEIGHT_PER_GPU_FALLBACK } };
-  let weightsLoaded = false;
+  const gpuTypes = Object.keys(GPU_CONFIG);
 
-  function fmtUpdatedUTC(d) {
-    const hh = String(d.getUTCHours()).padStart(2, '0');
-    const mm = String(d.getUTCMinutes()).padStart(2, '0');
-    const ss = String(d.getUTCSeconds()).padStart(2, '0');
-    return `${hh}:${mm}:${ss}`;
+  container.innerHTML = gpuTypes.map(gpuType => {
+    const config = GPU_CONFIG[gpuType];
+    const monthlyPrice = calculateMonthlyPrice(config.pricePerGpuHour, config.gpusPerServer);
+
+    return `
+      <div class="pricing-card" id="pkg-${gpuType.toLowerCase()}">
+        <h3>${config.gpusPerServer}x ${config.name} Server</h3>
+        <div class="price">$${formatCurrency(monthlyPrice)}<span class="price-unit">/month</span></div>
+        <p class="price-sub"><strong>$${config.pricePerGpuHour.toFixed(2)}</strong> per GPU/hour</p>
+        <p>Month-to-month contract</p>
+      </div>
+    `;
+  }).join('');
+})();
+
+// ============================================================================
+// Efficiency List Generator
+// ============================================================================
+
+(function initEfficiencyList() {
+  const container = document.getElementById('eff-list');
+  if (!container) return;
+
+  const gpuTypes = Object.keys(GPU_CONFIG);
+
+  container.innerHTML = gpuTypes.map(gpuType => {
+    const config = GPU_CONFIG[gpuType];
+    return `
+      <li class="eff-item" data-gpu="${gpuType}">
+        <div class="eff-left">
+          <span class="eff-gpu">${config.name}</span>
+          <span class="eff-badge">Best value</span>
+        </div>
+        <span class="eff-val" id="eff-${gpuType.toLowerCase()}">—</span>
+        <div class="eff-bar-wrap" aria-hidden="true"><div class="eff-bar"></div></div>
+      </li>
+    `;
+  }).join('');
+})();
+
+// ============================================================================
+// Efficiency Calculator
+// ============================================================================
+
+(function initEfficiencyCalculator() {
+  // DOM elements
+  const elements = {
+    list: document.getElementById('eff-list'),
+    epoch: document.getElementById('eff-epoch'),
+    updated: document.getElementById('eff-updated'),
+    status: document.getElementById('eff-status'),
+  };
+
+  // State
+  let weightsData = {
+    epoch: null,
+    weights: Object.fromEntries(
+      Object.entries(GPU_CONFIG).map(([gpu, config]) => [gpu, config.fallbackWeight])
+    ),
+  };
+  let customWeightsLoaded = false;
+
+  // -------------------------------------------------------------------------
+  // UI State Management
+  // -------------------------------------------------------------------------
+
+  /**
+   * Updates the status indicator
+   * @param {'loading'|'success'|'error'} state - Current state
+   * @param {string} [message] - Optional error message
+   */
+  function setStatus(state, message = '') {
+    if (!elements.status) return;
+
+    elements.status.className = `eff-status eff-status--${state}`;
+
+    switch (state) {
+      case 'loading':
+        elements.status.innerHTML = '<span class="eff-spinner"></span> Loading...';
+        break;
+      case 'success':
+        elements.status.textContent = '';
+        break;
+      case 'error':
+        elements.status.textContent = message || 'Using cached data';
+        break;
+    }
   }
 
+  // -------------------------------------------------------------------------
+  // Data Fetching
+  // -------------------------------------------------------------------------
+
+  /**
+   * Fetches JSON from a URL with timeout
+   * @param {string} url - URL to fetch
+   * @returns {Promise<object>} Parsed JSON response
+   * @throws {Error} On network or parse error
+   */
   async function fetchJson(url) {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 8000);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeoutMs);
+
     try {
-      const res = await fetch(url, { signal: ctrl.signal, cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return await res.json();
+      const response = await fetch(url, {
+        signal: controller.signal,
+        cache: 'no-store'
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      return await response.json();
     } finally {
-      clearTimeout(t);
+      clearTimeout(timeoutId);
     }
   }
 
-  function extractEpoch(j) {
-    const ap = j && j.active_participants;
-    return { epochId: ap && ap.epoch_id };
+  /**
+   * Extracts epoch ID from API response
+   * @param {object} apiResponse - Raw API response
+   * @returns {number|null} Epoch ID or null
+   */
+  function extractEpochId(apiResponse) {
+    return apiResponse?.active_participants?.epoch_id ?? null;
   }
 
-  function parseWeightsPayload(obj) {
-    const out = { epoch: null, weights: {} };
-    if (!obj || typeof obj !== 'object') return out;
-    if (obj.epoch != null) out.epoch = obj.epoch;
-    const w = obj.weights;
-    if (w && typeof w === 'object') {
-      for (const k of Object.keys(w)) {
-        const v = Number(w[k]);
-        if (Number.isFinite(v)) out.weights[k.toUpperCase()] = v;
+  /**
+   * Parses custom weights payload from URL parameter
+   * @param {object} payload - Raw weights payload
+   * @returns {{epoch: number|null, weights: object}} Parsed weights
+   */
+  function parseWeightsPayload(payload) {
+    const result = { epoch: null, weights: {} };
+
+    if (!payload || typeof payload !== 'object') {
+      return result;
+    }
+
+    if (payload.epoch != null) {
+      result.epoch = payload.epoch;
+    }
+
+    if (payload.weights && typeof payload.weights === 'object') {
+      for (const [gpuType, weight] of Object.entries(payload.weights)) {
+        const numericWeight = Number(weight);
+        if (Number.isFinite(numericWeight)) {
+          result.weights[gpuType.toUpperCase()] = numericWeight;
+        }
       }
     }
-    return out;
+
+    return result;
   }
 
-  async function maybeLoadWeightsFromUrl() {
-    if (weightsLoaded) return;
-    let wurl = null;
+  /**
+   * Attempts to load custom weights from URL parameter
+   */
+  async function loadCustomWeightsIfPresent() {
+    if (customWeightsLoaded) return;
+
+    let weightsUrl = null;
     try {
-      const u = new URL(window.location.href);
-      wurl = u.searchParams.get('weightsUrl');
-    } catch {}
-    if (!wurl) return;
-    try {
-      const j = await fetchJson(wurl);
-      const p = parseWeightsPayload(j);
-      if (Object.keys(p.weights).length) {
-        weightsPayload = p;
-        weightsLoaded = true;
-      }
-    } catch {}
-  }
-
-  function setEff(el, v) {
-    if (!el) return;
-    el.textContent = (v == null || !Number.isFinite(v)) ? '—' : v.toFixed(3);
-  }
-
-  function renderEfficiency(epochId, updatedNow) {
-    const w = weightsPayload.weights || {};
-    const vA100 = (w.A100 && PRICE_PER_GPU_HR.A100) ? (w.A100 / PRICE_PER_GPU_HR.A100) : null;
-    const vH100 = (w.H100 && PRICE_PER_GPU_HR.H100) ? (w.H100 / PRICE_PER_GPU_HR.H100) : null;
-    const vH200 = (w.H200 && PRICE_PER_GPU_HR.H200) ? (w.H200 / PRICE_PER_GPU_HR.H200) : null;
-    const vB200 = (w.B200 && PRICE_PER_GPU_HR.B200) ? (w.B200 / PRICE_PER_GPU_HR.B200) : null;
-
-    setEff(elEffA100, vA100);
-    setEff(elEffH100, vH100);
-    setEff(elEffH200, vH200);
-    setEff(elEffB200, vB200);
-
-    const list = document.querySelector('.eff-list');
-    if (list) {
-      const byGpu = { A100: vA100, H100: vH100, H200: vH200, B200: vB200 };
-      const items = Array.from(list.querySelectorAll('.eff-item'));
-      for (const it of items) {
-        const g = it.getAttribute('data-gpu');
-        const vv = (g && Object.prototype.hasOwnProperty.call(byGpu, g)) ? byGpu[g] : null;
-        it.dataset.eff = (vv == null || !Number.isFinite(vv)) ? '' : String(vv);
-      }
-      items.sort((a, b) => {
-        const av = Number(a.dataset.eff);
-        const bv = Number(b.dataset.eff);
-        const aOk = Number.isFinite(av);
-        const bOk = Number.isFinite(bv);
-        if (aOk && bOk) return bv - av;
-        if (bOk) return 1;
-        if (aOk) return -1;
-        return 0;
-      });
-      for (const it of items) list.appendChild(it);
-
-      const maxEff = Math.max(...items.map(it => Number(it.dataset.eff)).filter(n => Number.isFinite(n)), 0);
-      items.forEach((it, idx) => {
-        it.dataset.rank = String(idx + 1);
-        const v = Number(it.dataset.eff);
-        const pct = (Number.isFinite(v) && maxEff > 0) ? Math.max(0, Math.min(100, (v / maxEff) * 100)) : 0;
-        const bar = it.querySelector('.eff-bar');
-        if (bar) bar.style.width = `${pct.toFixed(1)}%`;
-      });
+      const currentUrl = new URL(window.location.href);
+      weightsUrl = currentUrl.searchParams.get('weightsUrl');
+    } catch (error) {
+      console.warn('[Efficiency] Failed to parse URL:', error.message);
+      return;
     }
 
-    const ep = (weightsPayload.epoch != null) ? weightsPayload.epoch : epochId;
-    if (elEffEpoch) elEffEpoch.textContent = (ep != null ? String(ep) : '—');
-    if (elEffUpdated) elEffUpdated.textContent = fmtUpdatedUTC(updatedNow);
+    if (!weightsUrl) return;
+
+    try {
+      const rawPayload = await fetchJson(weightsUrl);
+      const parsedWeights = parseWeightsPayload(rawPayload);
+
+      if (Object.keys(parsedWeights.weights).length > 0) {
+        weightsData = parsedWeights;
+        customWeightsLoaded = true;
+        console.info('[Efficiency] Loaded custom weights from URL');
+      }
+    } catch (error) {
+      console.warn('[Efficiency] Failed to load custom weights:', error.message);
+    }
   }
 
+  // -------------------------------------------------------------------------
+  // Efficiency Calculation & Rendering
+  // -------------------------------------------------------------------------
+
+  /**
+   * Calculates efficiency for a GPU type
+   * @param {string} gpuType - GPU type (e.g., 'A100')
+   * @returns {number|null} Efficiency value or null if unavailable
+   */
+  function calculateEfficiency(gpuType) {
+    const weight = weightsData.weights[gpuType];
+    const price = GPU_CONFIG[gpuType]?.pricePerGpuHour;
+
+    if (!weight || !price) return null;
+    return weight / price;
+  }
+
+  /**
+   * Renders efficiency data to the DOM
+   * @param {number|null} epochId - Current epoch ID
+   * @param {Date} updateTime - Time of update
+   */
+  function renderEfficiency(epochId, updateTime) {
+    if (!elements.list) return;
+
+    // Calculate efficiency for each GPU
+    const efficiencyByGpu = {};
+    for (const gpuType of Object.keys(GPU_CONFIG)) {
+      efficiencyByGpu[gpuType] = calculateEfficiency(gpuType);
+    }
+
+    // Update each list item
+    const items = Array.from(elements.list.querySelectorAll('.eff-item'));
+
+    for (const item of items) {
+      const gpuType = item.getAttribute('data-gpu');
+      const efficiency = efficiencyByGpu[gpuType];
+      const valueElement = item.querySelector('.eff-val');
+
+      // Update displayed value
+      if (valueElement) {
+        valueElement.textContent = Number.isFinite(efficiency)
+          ? efficiency.toFixed(3)
+          : '—';
+      }
+
+      // Store efficiency for sorting
+      item.dataset.eff = Number.isFinite(efficiency) ? String(efficiency) : '';
+    }
+
+    // Sort items by efficiency (highest first)
+    items.sort((itemA, itemB) => {
+      const effA = Number(itemA.dataset.eff);
+      const effB = Number(itemB.dataset.eff);
+      const hasEffA = Number.isFinite(effA);
+      const hasEffB = Number.isFinite(effB);
+
+      if (hasEffA && hasEffB) return effB - effA;
+      if (hasEffB) return 1;
+      if (hasEffA) return -1;
+      return 0;
+    });
+
+    // Re-append items in sorted order and update visual bars
+    const validEfficiencies = items
+      .map(item => Number(item.dataset.eff))
+      .filter(eff => Number.isFinite(eff));
+    const maxEfficiency = Math.max(...validEfficiencies, 0);
+
+    items.forEach((item, index) => {
+      elements.list.appendChild(item);
+      item.dataset.rank = String(index + 1);
+
+      const efficiency = Number(item.dataset.eff);
+      const barElement = item.querySelector('.eff-bar');
+
+      if (barElement) {
+        const percentage = (Number.isFinite(efficiency) && maxEfficiency > 0)
+          ? Math.max(0, Math.min(100, (efficiency / maxEfficiency) * 100))
+          : 0;
+        barElement.style.width = `${percentage.toFixed(1)}%`;
+      }
+    });
+
+    // Update epoch and timestamp
+    const displayEpoch = weightsData.epoch ?? epochId;
+
+    if (elements.epoch) {
+      elements.epoch.textContent = displayEpoch != null ? String(displayEpoch) : '—';
+    }
+
+    if (elements.updated) {
+      elements.updated.textContent = formatTimeUTC(updateTime);
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Main Refresh Loop
+  // -------------------------------------------------------------------------
+
+  /**
+   * Fetches latest data and updates the UI
+   */
   async function refresh() {
-    const updatedNow = new Date();
+    const updateTime = new Date();
+    setStatus('loading');
+
     try {
-      const epochJ = await fetchJson(EPOCH_PARTICIPANTS_URL);
-      const ep = extractEpoch(epochJ);
-      await maybeLoadWeightsFromUrl();
-      renderEfficiency(ep.epochId, updatedNow);
-    } catch {
-      await maybeLoadWeightsFromUrl();
-      renderEfficiency(null, updatedNow);
+      const apiResponse = await fetchJson(API_CONFIG.epochParticipantsUrl);
+      const epochId = extractEpochId(apiResponse);
+
+      await loadCustomWeightsIfPresent();
+      renderEfficiency(epochId, updateTime);
+      setStatus('success');
+
+    } catch (error) {
+      console.warn('[Efficiency] API fetch failed:', error.message);
+
+      await loadCustomWeightsIfPresent();
+      renderEfficiency(null, updateTime);
+      setStatus('error', 'API unavailable — using fallback data');
     }
   }
 
+  // Initialize
   refresh();
-  setInterval(refresh, POLL_MS);
+  setInterval(refresh, API_CONFIG.pollIntervalMs);
 })();
