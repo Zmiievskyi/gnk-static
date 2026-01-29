@@ -28,7 +28,7 @@ const GPU_CONFIG = {
   },
   B200: {
     name: 'B200',
-    pricePerGpuHour: 3.50,
+    pricePerGpuHour: 3.02,
     gpusPerServer: 8,
     fallbackWeight: 955.921,
   },
@@ -52,7 +52,8 @@ const API_CONFIG = {
  */
 function calculateMonthlyPrice(pricePerGpuHour, gpusPerServer) {
   const hoursPerMonth = 730;
-  return pricePerGpuHour * gpusPerServer * hoursPerMonth;
+  const rawPrice = pricePerGpuHour * gpusPerServer * hoursPerMonth;
+  return Math.round(rawPrice / 10) * 10;
 }
 
 /**
