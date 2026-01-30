@@ -228,22 +228,23 @@ nav a:hover::after {
 }
 
 .nav-btn {
-  display: inline-block;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
   border: none;
   cursor: pointer;
-  color: var(--brand);
+  color: #fff;
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.875em;
-  padding: 8px 14px;
-  border-radius: 10px;
-  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: transform 0.18s ease, background-color 0.18s ease;
 }
 
 .nav-btn:hover {
-  background: rgba(255, 76, 0, 0.1);
-  color: var(--brand);
+  background: var(--brand2);
   transform: translateY(-1px);
 }
 
@@ -361,6 +362,9 @@ p {
   align-items: center;
   justify-content: center;
   width: auto;
+  flex: 0 0 auto;
+  border: none;
+  cursor: pointer;
   padding: 14px 24px;
   border-radius: 12px;
   font-family: var(--font-body);
