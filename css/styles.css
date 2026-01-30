@@ -336,14 +336,8 @@ p {
   animation: hero-text-in 0.8s var(--ease-out) 0.2s backwards;
 }
 
-.hero .cta .cta-btn-wrap {
-  display: flex;
-  flex: 1;
-  max-width: 260px;
-}
-
 .hero .cta .btn {
-  flex: 1;
+  width: 250px;
   padding: 14px 24px;
   border: 2px solid transparent;
   line-height: 1.6;
