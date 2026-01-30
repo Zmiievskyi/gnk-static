@@ -384,6 +384,7 @@ p {
 .btn-primary {
   background: var(--brand);
   color: #fff;
+  border: 2px solid var(--brand);
   position: relative;
   overflow: hidden;
 }
