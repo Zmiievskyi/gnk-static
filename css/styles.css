@@ -1396,18 +1396,6 @@ footer::before {
   text-decoration: underline;
 }
 
-.btn-rent {
-  width: 100%;
-  margin-top: 12px;
-  border: none;
-  cursor: pointer;
-  background: var(--brand);
-  color: #fff;
-}
-
-.btn-rent:hover {
-  background: var(--brand2);
-}
 
 @media (max-width: 768px) {
   .hubspot-modal {
