@@ -364,13 +364,14 @@ p {
   width: fit-content;
   max-width: fit-content;
   flex: 0 0 auto;
-  border: none;
+  border: 2px solid transparent;
   cursor: pointer;
   padding: 14px 24px;
   border-radius: 12px;
   font-family: var(--font-body);
   font-size: 1em;
   font-weight: 600;
+  line-height: 1.6;
   text-decoration: none;
   box-shadow: var(--shadow-sm);
   transition:
