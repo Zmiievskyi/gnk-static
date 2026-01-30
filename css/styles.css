@@ -336,6 +336,20 @@ p {
   animation: hero-text-in 0.8s var(--ease-out) 0.2s backwards;
 }
 
+.hero .cta .btn {
+  padding: 14px 24px;
+  border: 2px solid transparent;
+  line-height: 1.6;
+}
+
+.hero .cta .btn-primary {
+  border-color: var(--brand);
+}
+
+.hero .cta .btn-secondary {
+  border-color: rgba(255, 76, 0, 0.4);
+}
+
 @keyframes hero-text-in {
   from {
     opacity: 0;
@@ -630,6 +644,21 @@ p {
 
 .pricing-card:hover::before {
   transform: scaleX(1);
+}
+
+.pricing-card .btn-rent {
+  padding: 10px 20px;
+  font-size: 0.9em;
+  background: var(--brand);
+  color: #fff;
+  border: 2px solid var(--brand);
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+.pricing-card .btn-rent:hover {
+  background: var(--brand2);
+  border-color: var(--brand2);
 }
 
 .price {
