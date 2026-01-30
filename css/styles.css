@@ -338,7 +338,8 @@ p {
 
 .hero .cta .cta-btn-wrap {
   display: flex;
-  min-width: 220px;
+  flex: 1;
+  max-width: 260px;
 }
 
 .hero .cta .btn {
