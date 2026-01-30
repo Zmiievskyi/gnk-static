@@ -338,6 +338,8 @@ p {
 
 .hero .cta .btn {
   width: 250px;
+  min-width: 250px;
+  max-width: 250px;
   padding: 14px 24px;
   border: 2px solid transparent;
   line-height: 1.6;
@@ -1219,6 +1221,21 @@ footer::before {
 
   .hero-sub {
     font-size: 1.05em;
+  }
+
+  .hero .cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero .cta .btn {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+  }
+
+  .pricing-card {
+    text-align: center;
   }
 
   .footer-inner {
