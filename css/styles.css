@@ -361,7 +361,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: fit-content;
+  max-width: fit-content;
   flex: 0 0 auto;
   border: none;
   cursor: pointer;
