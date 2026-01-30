@@ -227,6 +227,26 @@ nav a:hover::after {
   transform: scaleX(1);
 }
 
+.nav-btn {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--brand);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875em;
+  padding: 8px 14px;
+  border-radius: 10px;
+  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 76, 0, 0.1);
+  color: var(--brand);
+  transform: translateY(-1px);
+}
+
 /* ============================================================================
    Typography
    ============================================================================ */
@@ -1151,14 +1171,6 @@ footer::before {
 }
 
 @media (max-width: 768px) {
-  .cta {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
   h1 {
     font-size: 2em;
   }
