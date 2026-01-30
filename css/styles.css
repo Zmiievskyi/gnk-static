@@ -336,11 +336,18 @@ p {
   animation: hero-text-in 0.8s var(--ease-out) 0.2s backwards;
 }
 
+.hero .cta .cta-btn-wrap {
+  display: flex;
+  min-width: 220px;
+}
+
 .hero .cta .btn {
+  flex: 1;
   padding: 14px 24px;
   border: 2px solid transparent;
   line-height: 1.6;
-  min-height: 56px;
+  text-align: center;
+  justify-content: center;
 }
 
 .hero .cta .btn-primary {
@@ -669,10 +676,10 @@ p {
   font-family: var(--font-display);
   font-style: normal;
   font-size: 2.2em;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--brand);
   margin: 12px 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .price-unit {
