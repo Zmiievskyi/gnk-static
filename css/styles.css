@@ -340,6 +340,7 @@ p {
   padding: 14px 24px;
   border: 2px solid transparent;
   line-height: 1.6;
+  min-height: 56px;
 }
 
 .hero .cta .btn-primary {
@@ -364,6 +365,7 @@ p {
 /* CTA Buttons */
 .cta {
   display: flex;
+  align-items: center;
   gap: 14px;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -647,13 +649,15 @@ p {
 }
 
 .pricing-card .btn-rent {
-  padding: 10px 20px;
-  font-size: 0.9em;
+  display: flex;
+  width: fit-content;
+  margin: 12px auto 0;
+  padding: 8px 16px;
+  font-size: 0.875em;
   background: var(--brand);
   color: #fff;
   border: 2px solid var(--brand);
-  border-radius: 10px;
-  margin-top: 12px;
+  border-radius: 8px;
 }
 
 .pricing-card .btn-rent:hover {

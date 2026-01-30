@@ -128,14 +128,21 @@ All design tokens in `:root`:
 ```
 
 ### Buttons
+
+Base button styles with consistent sizing:
 ```css
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  max-width: fit-content;
+  flex: 0 0 auto;
+  border: 2px solid transparent;
   padding: 14px 24px;
   border-radius: 12px;
   font-weight: 600;
+  line-height: 1.6;
   transition:
     transform 0.2s var(--ease-bounce),
     box-shadow 0.2s ease,
@@ -145,12 +152,59 @@ All design tokens in `:root`:
 .btn-primary {
   background: var(--brand);
   color: #fff;
+  border: 2px solid var(--brand);
 }
 
 .btn-primary:hover {
   background: var(--brand2);
+  border-color: var(--brand2);
   transform: translateY(-2px);
   box-shadow: var(--shadow), var(--shadow-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--brand);
+  border: 2px solid rgba(255, 76, 0, 0.4);
+}
+```
+
+### Context-Specific Button Styles
+
+**Hero section** - Both buttons same size:
+```css
+.hero .cta .btn {
+  padding: 14px 24px;
+  border: 2px solid transparent;
+  line-height: 1.6;
+}
+.hero .cta .btn-primary { border-color: var(--brand); }
+.hero .cta .btn-secondary { border-color: rgba(255, 76, 0, 0.4); }
+```
+
+**Pricing cards** - Smaller orange buttons:
+```css
+.pricing-card .btn-rent {
+  padding: 10px 20px;
+  font-size: 0.9em;
+  background: var(--brand);
+  color: #fff;
+  border: 2px solid var(--brand);
+  border-radius: 10px;
+  margin-top: 12px;
+}
+```
+
+**Header nav** - Compact orange button:
+```css
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.875em;
+  padding: 8px 16px;
+  border-radius: 8px;
 }
 ```
 

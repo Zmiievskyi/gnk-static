@@ -39,22 +39,34 @@ Use CSS custom properties from `:root` in `css/styles.css`. Never hardcode color
 
 ## Button Patterns
 
+Base `.btn` class provides consistent sizing. All buttons use `border: 2px` for equal height.
+
 ```css
-/* Primary */
+/* Primary - solid orange */
 .btn-primary {
   background: var(--brand);
-  color: white;
-  padding: 12px 26px;
-  border-radius: var(--r);
+  color: #fff;
+  border: 2px solid var(--brand);
+  padding: 14px 24px;
+  border-radius: 12px;
 }
 
-/* Secondary */
+/* Secondary - outlined */
 .btn-secondary {
   background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
+  color: var(--brand);
+  border: 2px solid rgba(255, 76, 0, 0.4);
 }
 ```
+
+### Context-Specific Buttons
+
+| Location | Class | Size | Notes |
+|----------|-------|------|-------|
+| Hero | `.btn` | 14px 24px | Both buttons same height |
+| Pricing cards | `.pricing-card .btn-rent` | 10px 20px | Smaller, orange |
+| Header nav | `.nav-btn` | 8px 16px | Compact, orange |
+| How It Works | `.btn-rent` | 14px 24px | Standard |
 
 ## Scroll Animation
 
