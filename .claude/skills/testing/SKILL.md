@@ -11,7 +11,7 @@ description: Manual testing procedures and QA for the MineGNK site. Use before d
 - [ ] All sections visible
 - [ ] Pricing cards display (4 GPUs)
 - [ ] Efficiency calculator shows data
-- [ ] "Rent Now" buttons open modal
+- [ ] "Request GPU" buttons open modal
 - [ ] HubSpot form loads and submits
 - [ ] Mobile layout works (375px)
 - [ ] No console errors
@@ -33,7 +33,7 @@ F12 or Cmd+Option+I
 ### Pricing
 - [ ] 4 GPU cards display
 - [ ] Prices correct: A100=$5,692, H100=$10,512, H200=$14,016, B200=$20,440
-- [ ] "Rent Now" opens modal with GPU pre-selected
+- [ ] "Request GPU" opens modal with GPU pre-selected
 
 ### Efficiency
 - [ ] List displays all 4 GPUs
@@ -42,7 +42,7 @@ F12 or Cmd+Option+I
 - [ ] Fallback works if API down
 
 ### HubSpot Modal
-- [ ] Opens from each "Rent Now" button
+- [ ] Opens from each "Request GPU" button
 - [ ] GPU field pre-populated
 - [ ] Form submits successfully
 - [ ] Close via X, backdrop, or Escape

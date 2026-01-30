@@ -11,8 +11,8 @@
   // ============================================================================
 
   const HUBSPOT_CONFIG = {
-    portalId: '147554099',
-    formId: '78fd550b-eec3-4958-bc4d-52c73924b87b',
+    portalId: '4202168',
+    formId: '0d64ead5-78c5-4ccb-84e3-3c088a10b212',
     region: 'eu1',                         // 'eu1' or 'na1'
     fieldName: 'form_gonka_preffered_configuration', // HubSpot internal field name
     scriptTimeout: 10000,                  // 10 seconds
@@ -303,18 +303,20 @@
       return;
     }
 
-    state.currentGpuType = gpuType;
-    const displayName = GPU_DISPLAY_NAMES[gpuType] || gpuType;
+    state.currentGpuType = gpuType || null;
+    const displayName = gpuType ? (GPU_DISPLAY_NAMES[gpuType] || gpuType) : '';
 
     // Update modal subtitle
     if (elements.modalSubtitle) {
-      elements.modalSubtitle.textContent = displayName;
+      elements.modalSubtitle.textContent = displayName || 'GPU Request';
     }
 
     // Add URL parameters for pre-population (MUST happen BEFORE form loads)
-    addUrlParams({
-      [HUBSPOT_CONFIG.fieldName]: displayName,
-    });
+    if (displayName) {
+      addUrlParams({
+        [HUBSPOT_CONFIG.fieldName]: displayName,
+      });
+    }
 
     // Show modal (wrapped in try/catch for edge cases)
     try {
@@ -421,7 +423,7 @@
   // ============================================================================
 
   /**
-   * Handles clicks on "Rent Now" buttons
+   * Handles clicks on "Request GPU" buttons
    * @param {Event} event - Click event
    */
   function handleRentButtonClick(event) {
@@ -492,7 +494,7 @@
       return;
     }
 
-    // Event delegation for "Rent Now" buttons (dynamically generated)
+    // Event delegation for "Request GPU" buttons (dynamically generated)
     document.addEventListener('click', handleRentButtonClick);
 
     // Close button

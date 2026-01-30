@@ -335,7 +335,7 @@ Four separate IIFEs in `main.js` for encapsulation:
 - Efficiency calculator with polling
 
 ### Event Delegation
-"Rent Now" buttons use document-level listener since they're dynamically generated:
+"Request GPU" buttons use document-level listener since they're dynamically generated:
 ```javascript
 document.addEventListener('click', (event) => {
   const button = event.target.closest('.btn-rent');

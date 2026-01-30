@@ -9,8 +9,8 @@ description: Manage HubSpot form integration, modal behavior, and form pre-popul
 
 ```javascript
 const HUBSPOT_CONFIG = {
-  portalId: '147554099',
-  formId: '78fd550b-eec3-4958-bc4d-52c73924b87b',
+  portalId: '4202168',
+  formId: '0d64ead5-78c5-4ccb-84e3-3c088a10b212',
   region: 'eu1',
   fieldName: 'form_gonka_preffered_configuration',
   scriptTimeout: 10000,
@@ -86,7 +86,7 @@ function showError(message) {
 
 ## Testing
 
-1. Click each "Rent Now" button
+1. Click each "Request GPU" button
 2. Verify modal opens with correct GPU
 3. Check URL parameter is set
 4. Submit test form

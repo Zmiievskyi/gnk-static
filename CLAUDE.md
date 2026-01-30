@@ -44,7 +44,7 @@ Static marketing website for MineGNK - a managed GPU infrastructure service for 
    - Pre-populates GPU selection via URL parameter injection
    - Three states: loading (spinner), form (iframe), error (fallback email)
    - Uses iframe embed method (not v2 API) for cross-origin compatibility
-   - Event delegation handles dynamically generated "Rent Now" buttons
+   - Event delegation handles dynamically generated "Request GPU" buttons
 
 4. **Scroll Reveal Animations** (`js/main.js`):
    - IntersectionObserver triggers fade-in animations on sections
@@ -55,7 +55,7 @@ Static marketing website for MineGNK - a managed GPU infrastructure service for 
 
 1. **Hero** - Value proposition, "Three pains we remove", two CTAs
 2. **Solutions** - Service offerings for operators and pools, managed service add-on
-3. **Pricing** - GPU packages (dynamically generated cards with "Rent Now" buttons)
+3. **Pricing** - GPU packages (dynamically generated cards with "Request GPU" buttons)
 4. **Efficiency** - Real-time GPU efficiency comparison with visual bars
 5. **How It Works** - 7-step timeline from request to billing
 6. **FAQ** - 7 expandable `<details>` elements
@@ -130,8 +130,8 @@ API_CONFIG = {
 ### HubSpot Configuration
 ```javascript
 HUBSPOT_CONFIG = {
-  portalId: '147554099',
-  formId: '78fd550b-eec3-4958-bc4d-52c73924b87b',
+  portalId: '4202168',
+  formId: '0d64ead5-78c5-4ccb-84e3-3c088a10b212',
   region: 'eu1',
   fieldName: 'form_gonka_preffered_configuration',
   scriptTimeout: 10000

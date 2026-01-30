@@ -238,16 +238,16 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(2em, 5vw, 2.75em);
-  font-weight: 700;
+  font-size: clamp(2.25em, 6vw, 3.25em);
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin: 0 0 16px;
 }
 
 h2 {
-  font-size: 2em;
-  font-weight: 700;
+  font-size: 2.5em;
+  font-weight: 400;
   letter-spacing: -0.02em;
   margin: 0 0 18px;
 }
@@ -263,8 +263,8 @@ h2::after {
 }
 
 h3 {
-  font-size: 1.25em;
-  font-weight: 700;
+  font-size: 1.5em;
+  font-weight: 400;
   margin: 0 0 12px;
   letter-spacing: -0.01em;
 }
@@ -648,7 +648,7 @@ p {
 .formula-equals {
   font-size: 1.5em;
   color: var(--muted);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .formula-frac {
@@ -822,7 +822,7 @@ p {
 .timeline::before {
   content: "";
   position: absolute;
-  left: 26px;
+  left: 32px;
   top: 18px;
   bottom: 18px;
   width: 2px;
@@ -833,7 +833,7 @@ p {
 .timeline::after {
   content: "";
   position: absolute;
-  left: 26px;
+  left: 32px;
   bottom: 10px;
   width: 0;
   height: 0;
@@ -1167,11 +1167,11 @@ footer::before {
   }
 
   .timeline::before {
-    left: 22px;
+    left: 28px;
   }
 
   .timeline::after {
-    left: 22px;
+    left: 28px;
   }
 
   .marker {

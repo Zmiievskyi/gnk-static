@@ -81,7 +81,10 @@ function formatTimeUTC(date) {
 // Footer Year
 // ============================================================================
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const yearElement = document.getElementById('year');
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
 
 // ============================================================================
 // Pricing Cards Generator
@@ -103,8 +106,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
         <div class="price">$${formatCurrency(monthlyPrice)}<span class="price-unit">/month</span></div>
         <p class="price-sub"><strong>$${config.pricePerGpuHour.toFixed(2)}</strong> per GPU/hour</p>
         <p>Month-to-month contract</p>
-        <button class="btn btn-rent" data-gpu-type="${gpuType}" aria-label="Rent ${config.gpusPerServer}x ${config.name} Server">
-          Rent Now
+        <button class="btn btn-rent" data-gpu-type="${gpuType}" aria-label="Request ${config.gpusPerServer}x ${config.name} Server">
+          Request GPU
         </button>
       </div>
     `;
