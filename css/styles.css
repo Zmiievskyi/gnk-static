@@ -252,7 +252,8 @@ h2 {
   margin: 0 0 18px;
 }
 
-h2::after {
+h2::after,
+.section-title::after {
   content: "";
   display: block;
   width: 52px;
@@ -828,6 +829,8 @@ p {
   width: 2px;
   background: linear-gradient(180deg, var(--brand) 0%, rgba(255, 76, 0, 0.1) 100%);
   border-radius: 999px;
+  transform: translateX(-50%);
+  z-index: 0;
 }
 
 .timeline::after {
@@ -859,6 +862,8 @@ p {
 }
 
 .marker span {
+  position: relative;
+  z-index: 1;
   width: 34px;
   height: 34px;
   border-radius: 999px;
